@@ -4,7 +4,7 @@ interface StarfieldBackgroundProps {
   celebrationTrigger?: number | null;
 }
 
-interface Star {
+interface FloatingGlyph {
   x: number;
   y: number;
   radius: number;
@@ -31,21 +31,21 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
 
   useEffect(() => {
     if (celebrationTrigger && celebrationTrigger > 0) {
-      const colors = ['#00f2fe', '#fbbf24', '#a855f7', '#38bdf8', '#f472b6'];
+      const colors = ['#4A9FE8', '#D92732', '#172B3A', '#DCEEFF'];
       const newParticles: BurstParticle[] = [];
       const cx = window.innerWidth * 0.4;
       const cy = window.innerHeight * 0.45;
-      for (let i = 0; i < 65; i++) {
-        const angle = (Math.PI * 2 * i) / 65 + (Math.random() - 0.5) * 0.3;
-        const speed = 2 + Math.random() * 7;
+      for (let i = 0; i < 55; i++) {
+        const angle = (Math.PI * 2 * i) / 55 + (Math.random() - 0.5) * 0.3;
+        const speed = 2 + Math.random() * 6.5;
         newParticles.push({
           x: cx,
           y: cy,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed - 1.5,
-          size: 2 + Math.random() * 3.5,
+          size: 2.5 + Math.random() * 3.5,
           color: colors[i % colors.length],
-          alpha: 1,
+          alpha: 0.9,
         });
       }
       burstsRef.current.push(...newParticles);
@@ -59,7 +59,7 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
     if (!ctx) return;
 
     let animationFrameId: number;
-    const symbols = ['0', '1', '2⁰', '2¹', '2²', '2³', '2⁴', '✦'];
+    const symbols = ['0', '1', '2⁰', '2¹', '2²', '2³', '2⁴'];
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -68,35 +68,35 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
     resize();
     window.addEventListener('resize', resize);
 
-    const stars: Star[] = Array.from({ length: 55 }, (_, i) => ({
+    const glyphs: FloatingGlyph[] = Array.from({ length: 32 }, (_, i) => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      radius: 0.8 + Math.random() * 1.8,
-      alpha: 0.15 + Math.random() * 0.55,
-      speed: 0.15 + Math.random() * 0.35,
-      symbol: i % 5 === 0 ? symbols[i % symbols.length] : undefined,
+      radius: 1.2 + Math.random() * 1.5,
+      alpha: 0.1 + Math.random() * 0.22,
+      speed: 0.12 + Math.random() * 0.25,
+      symbol: i % 4 === 0 ? symbols[i % symbols.length] : undefined,
     }));
 
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      for (const star of stars) {
-        star.y -= star.speed;
-        if (star.y < -20) {
-          star.y = canvas.height + 10;
-          star.x = Math.random() * canvas.width;
+      for (const g of glyphs) {
+        g.y -= g.speed;
+        if (g.y < -20) {
+          g.y = canvas.height + 10;
+          g.x = Math.random() * canvas.width;
         }
 
-        if (star.symbol) {
+        if (g.symbol) {
           ctx.save();
           ctx.font = '11px "Fira Code", monospace';
-          ctx.fillStyle = `rgba(0, 242, 254, ${star.alpha * 0.45})`;
-          ctx.fillText(star.symbol, star.x, star.y);
+          ctx.fillStyle = `rgba(74, 159, 232, ${g.alpha})`;
+          ctx.fillText(g.symbol, g.x, g.y);
           ctx.restore();
         } else {
           ctx.beginPath();
-          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(196, 181, 253, ${star.alpha})`;
+          ctx.arc(g.x, g.y, g.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(74, 159, 232, ${g.alpha * 0.8})`;
           ctx.fill();
         }
       }
@@ -106,14 +106,12 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
       for (const p of burstsRef.current) {
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.12; // gravity
-        p.alpha -= 0.016;
+        p.vy += 0.12;
+        p.alpha -= 0.018;
         if (p.alpha > 0) {
           ctx.save();
           ctx.globalAlpha = Math.max(0, p.alpha);
           ctx.fillStyle = p.color;
-          ctx.shadowColor = p.color;
-          ctx.shadowBlur = 8;
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
           ctx.fill();
@@ -137,7 +135,7 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-75"
+      className="fixed inset-0 pointer-events-none z-0"
       aria-hidden="true"
     />
   );

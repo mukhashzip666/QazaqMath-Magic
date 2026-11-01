@@ -1,14 +1,27 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F8FA;
+  --text-primary: #172B3A;
+  --text-secondary: #657786;
+  --blue-light: #DCEEFF;
+  --blue-accent: #4A9FE8;
+  --red-accent: #D92732;
+  --border-color: #E5EAF0;
+}
 
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #FFFFFF;
+    color: #172B3A;
+    overflow-x: hidden;
   }
-  
+
   .font-magic {
-    font-family: 'Cinzel', serif;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.02em;
   }
 
   .font-code {
@@ -16,45 +29,57 @@
   }
 }
 
-/* Mystical Glow & Ambient Styles */
-.magic-glow-cyan {
-  box-shadow: 0 0 25px -3px rgba(0, 242, 254, 0.4), 0 0 10px -2px rgba(0, 242, 254, 0.3);
+/* Premium Light Surface Cards & Elevations */
+.surface-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E5EAF0;
+  box-shadow: 0 4px 20px -2px rgba(23, 43, 58, 0.05);
 }
 
-.magic-glow-purple {
-  box-shadow: 0 0 30px -4px rgba(139, 92, 246, 0.45), 0 0 12px -2px rgba(139, 92, 246, 0.3);
+.surface-card-secondary {
+  background-color: #F5F8FA;
+  border: 1px solid #E5EAF0;
 }
 
-.magic-glow-gold {
-  box-shadow: 0 0 25px -2px rgba(245, 158, 11, 0.45), 0 0 10px -1px rgba(245, 158, 11, 0.3);
+.surface-card-active {
+  background-color: #FFFFFF;
+  border: 1.5px solid #4A9FE8;
+  box-shadow: 0 10px 28px -4px rgba(74, 159, 232, 0.18);
 }
 
-.glass-panel {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Signature Thin Red Accent Lines */
+.red-line-top {
+  position: relative;
+}
+.red-line-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 24px;
+  width: 48px;
+  height: 2px;
+  background-color: #D92732;
 }
 
-.glass-panel-elevated {
-  background: rgba(22, 30, 56, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 242, 254, 0.2);
+.red-divider {
+  width: 36px;
+  height: 2px;
+  background-color: #D92732;
+  border-radius: 2px;
 }
 
-/* Custom Scrollbar for Chat & Tables */
+/* Clean Light Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(11, 15, 25, 0.8);
+  background: #F5F8FA;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(76, 29, 149, 0.5);
+  background: #CBD5E1;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 242, 254, 0.6);
+  background: #4A9FE8;
 }
