@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+  
+  .font-magic {
+    font-family: 'Cinzel', serif;
+  }
+
+  .font-code {
+    font-family: 'Fira Code', monospace;
+  }
+}
+
+/* Mystical Glow & Ambient Styles */
+.magic-glow-cyan {
+  box-shadow: 0 0 25px -3px rgba(0, 242, 254, 0.4), 0 0 10px -2px rgba(0, 242, 254, 0.3);
+}
+
+.magic-glow-purple {
+  box-shadow: 0 0 30px -4px rgba(139, 92, 246, 0.45), 0 0 12px -2px rgba(139, 92, 246, 0.3);
+}
+
+.magic-glow-gold {
+  box-shadow: 0 0 25px -2px rgba(245, 158, 11, 0.45), 0 0 10px -1px rgba(245, 158, 11, 0.3);
+}
+
+.glass-panel {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-elevated {
+  background: rgba(22, 30, 56, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+}
+
+/* Custom Scrollbar for Chat & Tables */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(11, 15, 25, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(76, 29, 149, 0.5);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 242, 254, 0.6);
+}
