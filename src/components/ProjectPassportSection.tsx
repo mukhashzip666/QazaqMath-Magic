@@ -1,40 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { GraduationCap, Target, Lightbulb, CheckCircle2, FileCode, Edit3, Save, Award, Sparkles, Printer } from 'lucide-react';
+import React from 'react';
+import { GraduationCap, Target, Lightbulb, CheckCircle2, FileCode, Award, Sparkles, Printer } from 'lucide-react';
 import { MAGIC_COLUMNS } from '../utils/magicTable';
 import { soundManager } from '../utils/soundEffects';
 
-interface AuthorInfo {
-  studentName: string;
-  grade: string;
-  supervisorName: string;
-  schoolName: string;
-}
-
-const DEFAULT_AUTHOR: AuthorInfo = {
-  studentName: 'Жас зерттеуші',
-  grade: '9 «А» сынып',
-  supervisorName: 'Математика және информатика пәні мұғалімі',
-  schoolName: 'Жалпы білім беретін мектеп-лицейі',
+const AUTHOR = {
+  studentName: 'Қанатұлы Айсұлтан',
+  grade: '5 сынып',
+  supervisorName: 'Ермаханова Назерке',
+  schoolName: 'А.Хангелдин атындағы 179 мектеп',
 };
 
 export const ProjectPassportSection: React.FC = () => {
-  const [author, setAuthor] = useState<AuthorInfo>(() => {
-    try {
-      const saved = localStorage.getItem('sikyrly_keste_author');
-      return saved ? JSON.parse(saved) : DEFAULT_AUTHOR;
-    } catch {
-      return DEFAULT_AUTHOR;
-    }
-  });
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('sikyrly_keste_author', JSON.stringify(author));
-    } catch {
-      // ignore storage error
-    }
-  }, [author]);
 
   const handleDownloadStandaloneHtml = () => {
     soundManager.playMagicReveal();
@@ -64,6 +40,11 @@ export const ProjectPassportSection: React.FC = () => {
       <div class="lg:col-span-7 bg-white rounded-xl border border-[#E5EAF0] overflow-hidden">
         <div id="grid" class="grid grid-cols-5 divide-x divide-[#CBD5E1]"></div>
       </div>
+    </div>
+    <div class="mt-6 pt-4 border-t border-[#E5EAF0] flex flex-wrap items-center justify-between gap-2 text-xs text-[#657786]">
+      <div>Жоба авторы: <strong class="text-[#172B3A]">${AUTHOR.studentName} (${AUTHOR.grade})</strong></div>
+      <div>Жетекшісі: <strong class="text-[#172B3A]">${AUTHOR.supervisorName}</strong></div>
+      <div>${AUTHOR.schoolName}</div>
     </div>
   </main>
   <script>
@@ -115,17 +96,8 @@ export const ProjectPassportSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Action Buttons: Edit Author & Download Standalone HTML */}
+          {/* Action Buttons: Download Standalone HTML & Print */}
           <div className="flex flex-wrap items-center gap-3 shrink-0">
-            <button
-              type="button"
-              onClick={() => setIsEditing(!isEditing)}
-              className="px-4 py-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#DCEEFF]/50 border border-[#E5EAF0] text-xs sm:text-sm font-semibold text-[#172B3A] flex items-center gap-2 cursor-pointer transition-colors"
-            >
-              {isEditing ? <Save className="w-4 h-4 text-[#4A9FE8]" /> : <Edit3 className="w-4 h-4 text-[#4A9FE8]" />}
-              <span>{isEditing ? 'Сақтау' : 'Авторды өңдеу'}</span>
-            </button>
-
             <button
               type="button"
               onClick={() => window.print()}
@@ -146,62 +118,26 @@ export const ProjectPassportSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Editable Author Metadata Strip */}
+        {/* Fixed Author Metadata Strip */}
         <div className="mt-6 pt-6 border-t border-[#E5EAF0] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#E5EAF0]">
             <span className="text-[11px] text-[#657786] block mb-1">Жоба авторы (Орындаған):</span>
-            {isEditing ? (
-              <input
-                type="text"
-                value={author.studentName}
-                onChange={(e) => setAuthor({ ...author, studentName: e.target.value })}
-                className="w-full bg-[#F5F8FA] border border-[#4A9FE8] rounded px-2 py-1 text-sm text-[#172B3A]"
-              />
-            ) : (
-              <strong className="text-sm sm:text-base text-[#D92732]">{author.studentName}</strong>
-            )}
+            <strong className="text-sm sm:text-base text-[#D92732]">{AUTHOR.studentName}</strong>
           </div>
 
           <div className="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#E5EAF0]">
-            <span className="text-[11px] text-[#657786] block mb-1">Сыныбы / Тобы:</span>
-            {isEditing ? (
-              <input
-                type="text"
-                value={author.grade}
-                onChange={(e) => setAuthor({ ...author, grade: e.target.value })}
-                className="w-full bg-[#F5F8FA] border border-[#4A9FE8] rounded px-2 py-1 text-sm text-[#172B3A]"
-              />
-            ) : (
-              <strong className="text-sm sm:text-base text-[#4A9FE8]">{author.grade}</strong>
-            )}
+            <span className="text-[11px] text-[#657786] block mb-1">Сыныбы:</span>
+            <strong className="text-sm sm:text-base text-[#4A9FE8]">{AUTHOR.grade}</strong>
           </div>
 
           <div className="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#E5EAF0]">
             <span className="text-[11px] text-[#657786] block mb-1">Жетекшісі:</span>
-            {isEditing ? (
-              <input
-                type="text"
-                value={author.supervisorName}
-                onChange={(e) => setAuthor({ ...author, supervisorName: e.target.value })}
-                className="w-full bg-[#F5F8FA] border border-[#4A9FE8] rounded px-2 py-1 text-sm text-[#172B3A]"
-              />
-            ) : (
-              <strong className="text-sm text-[#172B3A]">{author.supervisorName}</strong>
-            )}
+            <strong className="text-sm text-[#172B3A]">{AUTHOR.supervisorName}</strong>
           </div>
 
           <div className="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#E5EAF0]">
             <span className="text-[11px] text-[#657786] block mb-1">Білім беру мекемесі:</span>
-            {isEditing ? (
-              <input
-                type="text"
-                value={author.schoolName}
-                onChange={(e) => setAuthor({ ...author, schoolName: e.target.value })}
-                className="w-full bg-[#F5F8FA] border border-[#4A9FE8] rounded px-2 py-1 text-sm text-[#172B3A]"
-              />
-            ) : (
-              <strong className="text-sm text-[#172B3A]">{author.schoolName}</strong>
-            )}
+            <strong className="text-sm text-[#172B3A]">{AUTHOR.schoolName}</strong>
           </div>
         </div>
       </div>
