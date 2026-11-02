@@ -54,7 +54,7 @@ const TypingText: React.FC<{ text: string; animate?: boolean }> = ({ text, anima
           key={idx}
           className={
             line.startsWith('✨') || line.startsWith('🔮') || line.startsWith('🌟') || line.startsWith('Абракадабра')
-              ? 'font-semibold text-amber-200'
+              ? 'font-bold text-[#D92732]'
               : ''
           }
         >
@@ -95,44 +95,44 @@ export const VirtualMagicianChat: React.FC<VirtualMagicianChatProps> = ({
   const presetQuestions = [
     'Екілік санау жүйесі деген не?',
     'Неге 16, 8, 4, 2, 1 кілттері?',
+    '19 саны қалай шығады?',
     '64-ке дейін қалай кеңейтеді?',
-    'Компьютермен байланысы қандай?',
+    'Жобаны 10 баллға қалай қорғаймын?',
   ];
 
   return (
-    <div className="flex flex-col h-[600px] rounded-2xl glass-panel-elevated border border-purple-500/30 overflow-hidden shadow-2xl">
+    <div className="flex flex-col h-[480px] sm:h-[560px] rounded-2xl bg-[#FFFFFF] border border-[#E5EAF0] overflow-hidden shadow-[0_8px_30px_rgba(23,43,58,0.06)] relative">
+      {/* Signature thin red line at top */}
+      <div className="w-full h-[2px] bg-[#D92732]" />
+
       {/* Magician Header Bar */}
-      <div className="p-4 bg-gradient-to-r from-purple-950/80 via-[#111827]/90 to-cyan-950/80 border-b border-purple-900/50 flex items-center justify-between">
+      <div className="p-4 bg-[#F5F8FA] border-b border-[#E5EAF0] flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="relative">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-600 to-cyan-400 p-[1.5px] magic-glow-purple">
-              <div className="w-full h-full bg-[#0b0f19] rounded-full flex items-center justify-center">
-                <Bot className="w-5 h-5 text-cyan-300" />
-              </div>
-            </div>
+          <div className="w-10 h-10 rounded-xl bg-[#DCEEFF] border border-[#4A9FE8]/40 flex items-center justify-center text-[#172B3A]">
+            <Bot className="w-5 h-5 text-[#4A9FE8]" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-bold text-sm sm:text-base text-slate-100">
+              <span className="font-bold text-sm sm:text-base text-[#172B3A]">
                 Виртуалды Сиқыршы
               </span>
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <Sparkles className="w-3.5 h-3.5 text-[#D92732]" />
             </div>
-            <p className="text-[11px] text-cyan-300/80 font-medium">
-              ЖИ көмекшісі · Математикалық сиқыршы
+            <p className="text-[11px] text-[#657786] font-medium">
+              ЖИ көмекшісі · Математикалық талдаушы
             </p>
           </div>
         </div>
 
         <div className="text-right">
-          <span className="text-[11px] font-mono text-purple-300">
+          <span className="text-[11px] font-code font-semibold text-[#4A9FE8]">
             ЖИ Онлайн
           </span>
         </div>
       </div>
 
       {/* Messages Stream */}
-      <div className="grow overflow-y-auto p-4 space-y-3.5 bg-[#070b14]/50">
+      <div className="grow overflow-y-auto p-4 space-y-3.5 bg-[#FFFFFF]">
         {messages.map((msg, index) => {
           const isMagician = msg.sender === 'magician';
           const isLatestMagician = isMagician && index === messages.length - 1 && msg.animateTyping;
@@ -143,33 +143,33 @@ export const VirtualMagicianChat: React.FC<VirtualMagicianChatProps> = ({
               className={`flex flex-col ${isMagician ? 'items-start' : 'items-end'}`}
             >
               <div
-                className={`max-w-[88%] sm:max-w-[84%] rounded-2xl p-3 sm:p-3.5 text-xs sm:text-sm leading-relaxed transition-all ${
+                className={`max-w-[88%] sm:max-w-[84%] rounded-2xl p-3.5 text-xs sm:text-sm leading-relaxed transition-all ${
                   isMagician
-                    ? 'bg-gradient-to-br from-[#161d33] to-[#0f172a] text-slate-100 border border-purple-500/30 rounded-tl-sm shadow-md'
-                    : 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-medium rounded-tr-sm shadow-md'
+                    ? 'bg-[#F5F8FA] text-[#172B3A] border border-[#E5EAF0] rounded-tl-xs'
+                    : 'bg-[#4A9FE8] text-white font-medium rounded-tr-xs shadow-xs'
                 }`}
               >
                 <TypingText text={msg.text} animate={isLatestMagician} />
 
                 {/* Quick Action Button (Step 2: «Иә, құпиясын аш! 🔓») */}
                 {msg.quickAction && msg.quickAction.type === 'reveal_secret' && !isSecretRevealed && (
-                  <div className="mt-3 pt-2.5 border-t border-purple-500/20">
+                  <div className="mt-3 pt-2.5 border-t border-[#E5EAF0]">
                     <button
                       type="button"
                       onClick={() => {
                         onRevealSecret();
                         soundManager.playSecretUnlock();
                       }}
-                      className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 text-slate-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-lg shadow-amber-500/25 hover:from-amber-300 hover:to-yellow-400 cursor-pointer transition-transform active:scale-98"
+                      className="w-full py-2 px-3 rounded-xl bg-[#D92732] hover:bg-[#b81f29] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-xs cursor-pointer transition-colors"
                     >
-                      <Unlock className="w-4 h-4 text-slate-950" />
+                      <Unlock className="w-4 h-4" />
                       <span>{msg.quickAction.label}</span>
                     </button>
                   </div>
                 )}
               </div>
 
-              <span className="text-[10px] text-slate-500 mt-1 px-1 font-mono">
+              <span className="text-[10px] text-[#657786] mt-1 px-1 font-code">
                 {msg.timestamp}
               </span>
             </div>
@@ -177,9 +177,9 @@ export const VirtualMagicianChat: React.FC<VirtualMagicianChatProps> = ({
         })}
 
         {isGenerating && (
-          <div className="flex items-center gap-2 p-3 rounded-2xl bg-[#161d33] border border-purple-500/20 max-w-[75%]">
-            <Loader2 className="w-4 h-4 text-cyan-400 animate-spin" />
-            <span className="text-xs text-slate-400 italic">
+          <div className="flex items-center gap-2 p-3 rounded-2xl bg-[#F5F8FA] border border-[#E5EAF0] max-w-[75%]">
+            <Loader2 className="w-4 h-4 text-[#4A9FE8] animate-spin" />
+            <span className="text-xs text-[#657786] italic">
               Сиқыршы ойланып, жауап жазуда...
             </span>
           </div>
@@ -189,10 +189,10 @@ export const VirtualMagicianChat: React.FC<VirtualMagicianChatProps> = ({
       </div>
 
       {/* Suggested Quick Question Chips */}
-      <div className="p-2.5 bg-[#0b0f19] border-t border-slate-800/80">
+      <div className="p-2.5 bg-[#F5F8FA] border-t border-[#E5EAF0]">
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px]">
-          <span className="text-slate-500 flex items-center gap-1 shrink-0 px-1">
-            <HelpCircle className="w-3 h-3 text-purple-400" />
+          <span className="text-[#657786] flex items-center gap-1 shrink-0 px-1 font-medium">
+            <HelpCircle className="w-3.5 h-3.5 text-[#4A9FE8]" />
             Сұрау:
           </span>
           {presetQuestions.map((q, idx) => (
@@ -204,7 +204,7 @@ export const VirtualMagicianChat: React.FC<VirtualMagicianChatProps> = ({
                 soundManager.playSelect(580);
               }}
               disabled={isGenerating}
-              className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-purple-900/40 text-slate-300 hover:text-cyan-200 border border-slate-800 transition-colors shrink-0 cursor-pointer disabled:opacity-50"
+              className="px-2.5 py-1 rounded-lg bg-[#FFFFFF] hover:bg-[#DCEEFF] text-[#172B3A] border border-[#E5EAF0] hover:border-[#4A9FE8] transition-colors shrink-0 cursor-pointer disabled:opacity-50 font-medium"
             >
               {q}
             </button>
@@ -215,21 +215,21 @@ export const VirtualMagicianChat: React.FC<VirtualMagicianChatProps> = ({
       {/* Input Field */}
       <form
         onSubmit={handleSubmit}
-        className="p-3 bg-[#090d16] border-t border-slate-800/80 flex items-center gap-2"
+        className="p-3 bg-[#FFFFFF] border-t border-[#E5EAF0] flex items-center gap-2"
       >
         <input
           type="text"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          placeholder="Сиқыршыға сұрақ қойыңыз (мысалы: екілік жүйе деген не?)..."
+          placeholder="Сиқыршыға сұрақ қойыңыз (мысалы: 25 саны қалай шығады?)..."
           disabled={isGenerating}
-          className="grow px-3.5 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors disabled:opacity-50"
+          className="grow px-3.5 py-2.5 rounded-xl bg-[#F5F8FA] border border-[#E5EAF0] text-xs sm:text-sm text-[#172B3A] placeholder-[#657786] focus:outline-none focus:border-[#4A9FE8] focus:bg-[#FFFFFF] transition-colors disabled:opacity-50"
         />
         <button
           type="submit"
           disabled={!inputText.trim() || isGenerating}
           aria-label="Хабарлама жіберу"
-          className="p-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:opacity-90 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+          className="p-2.5 rounded-xl bg-[#D92732] hover:bg-[#b81f29] text-white transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
         >
           <Send className="w-4 h-4" />
         </button>

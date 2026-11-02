@@ -22,37 +22,38 @@ export const NumberTrainer: React.FC<NumberTrainerProps> = ({
   const formulaInfo = getMathFormula(activeCols);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="w-full max-w-xl rounded-2xl glass-panel-elevated border border-cyan-500/40 p-6 shadow-2xl relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#172B3A]/40 backdrop-blur-xs">
+      <div className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl bg-[#FFFFFF] border border-[#E5EAF0] p-4 sm:p-6 shadow-2xl relative">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-[#D92732]" />
         {/* Close Button */}
         <button
           onClick={onClose}
           aria-label="Жабу"
-          className="absolute top-4 right-4 p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-2 rounded-lg bg-[#F5F8FA] text-[#657786] hover:text-[#172B3A] transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Title */}
-        <div className="flex items-center gap-2 mb-4">
-          <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-300">
-            <Sparkles className="w-5 h-5 text-cyan-400" />
+        <div className="flex items-center gap-2.5 mb-4">
+          <div className="p-2 rounded-xl bg-[#DCEEFF] text-[#4A9FE8]">
+            <Sparkles className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-100">
+            <h3 className="text-lg font-extrabold text-[#172B3A]">
               «Сандар тренажері»
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#657786]">
               1 мен 31 аралығындағы кез келген санды таңдап, оның екілік құпиясын көріңіз
             </p>
           </div>
         </div>
 
         {/* Number Selector / Slider */}
-        <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 mb-5">
+        <div className="p-4 rounded-xl bg-[#F5F8FA] border border-[#E5EAF0] mb-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-slate-400 font-medium">Зерттелетін сан:</span>
-            <span className="text-2xl font-bold font-mono text-cyan-300 tabular-nums">
+            <span className="text-xs text-[#657786] font-semibold">Зерттелетін сан:</span>
+            <span className="text-2xl font-extrabold font-code text-[#D92732] tabular-nums">
               {selectedNum}
             </span>
           </div>
@@ -66,9 +67,9 @@ export const NumberTrainer: React.FC<NumberTrainerProps> = ({
               setSelectedNum(val);
               soundManager.playSelect(400 + val * 10);
             }}
-            className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+            className="w-full h-2 bg-[#E5EAF0] rounded-lg appearance-none cursor-pointer accent-[#4A9FE8]"
           />
-          <div className="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+          <div className="flex justify-between text-[10px] text-[#657786] font-code mt-1">
             <span>1</span>
             <span>8</span>
             <span>16</span>
@@ -79,7 +80,7 @@ export const NumberTrainer: React.FC<NumberTrainerProps> = ({
 
         {/* Quick Numbers grid */}
         <div className="mb-5">
-          <div className="text-xs text-slate-400 mb-2 font-medium">
+          <div className="text-xs text-[#657786] mb-2 font-semibold">
             Жылдам таңдау:
           </div>
           <div className="grid grid-cols-8 sm:grid-cols-11 gap-1.5 text-center">
@@ -90,10 +91,10 @@ export const NumberTrainer: React.FC<NumberTrainerProps> = ({
                   setSelectedNum(n);
                   soundManager.playSelect(450 + n * 8);
                 }}
-                className={`py-1 rounded text-xs font-mono font-semibold transition-all cursor-pointer ${
+                className={`py-1 rounded-lg text-xs font-code font-bold transition-all cursor-pointer ${
                   selectedNum === n
-                    ? 'bg-cyan-400 text-slate-950 font-bold scale-110 shadow-md'
-                    : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700'
+                    ? 'bg-[#D92732] text-white scale-105 shadow-xs'
+                    : 'bg-[#F5F8FA] text-[#172B3A] border border-[#E5EAF0] hover:bg-[#DCEEFF]'
                 }`}
               >
                 {n}
@@ -103,22 +104,22 @@ export const NumberTrainer: React.FC<NumberTrainerProps> = ({
         </div>
 
         {/* Binary Breakdown Result */}
-        <div className="p-4 rounded-xl bg-slate-950/70 border border-purple-500/30 mb-6 space-y-3">
-          <div className="flex items-center justify-between text-xs font-mono">
-            <span className="text-slate-400 flex items-center gap-1">
-              <Binary className="w-3.5 h-3.5 text-cyan-400" />
+        <div className="p-4 rounded-xl bg-[#F5F8FA] border border-[#E5EAF0] mb-6 space-y-2.5">
+          <div className="flex items-center justify-between text-xs font-code">
+            <span className="text-[#657786] flex items-center gap-1 font-medium">
+              <Binary className="w-3.5 h-3.5 text-[#4A9FE8]" />
               Екілік код (5-бит):
             </span>
-            <span className="text-amber-300 font-bold tracking-widest text-sm">
+            <span className="text-[#4A9FE8] font-extrabold tracking-widest text-sm">
               {formulaInfo.binaryRepresentation}₂
             </span>
           </div>
 
-          <div className="text-sm font-mono text-cyan-200">
+          <div className="text-sm font-code text-[#172B3A]">
             <strong>Қосынды:</strong> {formulaInfo.formulaText}
           </div>
 
-          <div className="text-xs text-slate-400">
+          <div className="text-xs text-[#657786]">
             Осы сан келесі бағандарда кездеседі:
             <div className="flex flex-wrap gap-1.5 mt-1.5">
               {MAGIC_COLUMNS.map((col) => {
@@ -126,10 +127,10 @@ export const NumberTrainer: React.FC<NumberTrainerProps> = ({
                 return (
                   <span
                     key={col.id}
-                    className={`px-2 py-0.5 rounded text-[11px] font-mono ${
+                    className={`px-2 py-0.5 rounded text-[11px] font-code ${
                       isPresent
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold'
-                        : 'bg-slate-900 text-slate-600 border border-slate-800'
+                        ? 'bg-[#DCEEFF] text-[#172B3A] border border-[#4A9FE8] font-bold'
+                        : 'bg-[#FFFFFF] text-[#657786] border border-[#E5EAF0]'
                     }`}
                   >
                     {col.title} ({col.key})
@@ -144,7 +145,7 @@ export const NumberTrainer: React.FC<NumberTrainerProps> = ({
         <div className="flex items-center justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl text-xs sm:text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-xl text-xs sm:text-sm text-[#657786] hover:text-[#172B3A] transition-colors cursor-pointer font-semibold"
           >
             Жабу
           </button>
@@ -154,7 +155,7 @@ export const NumberTrainer: React.FC<NumberTrainerProps> = ({
               onClose();
               soundManager.playMagicReveal();
             }}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-2 hover:opacity-90 transition-opacity cursor-pointer shadow-lg shadow-cyan-500/25"
+            className="px-5 py-2.5 rounded-xl bg-[#D92732] hover:bg-[#b81f29] text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-colors cursor-pointer shadow-sm"
           >
             <span>Кестеде белгілеу</span>
             <ArrowRight className="w-4 h-4" />

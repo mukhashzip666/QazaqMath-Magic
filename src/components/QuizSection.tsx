@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Trophy, CheckCircle2, XCircle, ArrowRight, RotateCcw, Award, Sparkles } from 'lucide-react';
+import { Trophy, CheckCircle2, XCircle, ArrowRight, RotateCcw, Award } from 'lucide-react';
 import { QUIZ_QUESTIONS } from '../utils/magicTable';
 import { soundManager } from '../utils/soundEffects';
 
@@ -55,33 +55,34 @@ export const QuizSection: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Header Banner */}
-      <div className="rounded-2xl glass-panel-elevated p-6 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="rounded-2xl bg-[#F5F8FA] p-6 border border-[#E5EAF0] flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#D92732]" />
         <div>
-          <div className="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider mb-1">
-            <Trophy className="w-4 h-4 text-amber-400" />
+          <div className="flex items-center gap-2 text-[#D92732] text-xs font-bold uppercase tracking-wider mb-1">
+            <Trophy className="w-4 h-4" />
             <span>Білімді тексеру · 10 сұрақ</span>
           </div>
-          <h2 className="font-magic text-2xl sm:text-3xl font-bold text-white">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#172B3A]">
             «1-ден 10-ға дейін» Интерактивті Викторина
           </h2>
-          <p className="text-xs sm:text-sm text-slate-300 mt-1">
+          <p className="text-xs sm:text-sm text-[#657786] mt-1">
             Екілік санау жүйесі мен «Сиқырлы кестенің» құпиясын қаншалықты меңгергеніңізді 10 балдық шкаламен тексеріңіз!
           </p>
         </div>
 
-        <div className="px-4 py-3 rounded-xl bg-slate-900/90 border border-amber-500/40 text-center shrink-0">
-          <span className="text-[11px] text-slate-400 block">Ұпайыңыз</span>
-          <span className="text-2xl font-extrabold font-mono text-amber-300 tabular-nums">
+        <div className="px-5 py-3 rounded-xl bg-[#FFFFFF] border border-[#E5EAF0] text-center shrink-0 shadow-xs">
+          <span className="text-[11px] text-[#657786] font-medium block">Ұпайыңыз</span>
+          <span className="text-2xl font-extrabold font-code text-[#D92732] tabular-nums">
             {score} / {QUIZ_QUESTIONS.length}
           </span>
         </div>
       </div>
 
       {!isFinished ? (
-        <div className="rounded-2xl glass-panel p-6 sm:p-8 border border-purple-500/30 shadow-2xl">
+        <div className="rounded-2xl bg-[#FFFFFF] p-6 sm:p-8 border border-[#E5EAF0] shadow-[0_8px_30px_rgba(23,43,58,0.05)]">
           {/* Progress Bar (1 to 10) */}
           <div className="mb-6">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-2 font-mono">
+            <div className="flex items-center justify-between text-xs text-[#657786] mb-2 font-code">
               <span>Сұрақ {currentIndex + 1} / {QUIZ_QUESTIONS.length}</span>
               <span>Прогресс: {Math.round(((currentIndex + 1) / QUIZ_QUESTIONS.length) * 100)}%</span>
             </div>
@@ -96,11 +97,11 @@ export const QuizSection: React.FC = () => {
                     className={`h-2 rounded-full transition-all ${
                       answered
                         ? isRight
-                          ? 'bg-emerald-400'
-                          : 'bg-rose-500'
+                          ? 'bg-[#4A9FE8]'
+                          : 'bg-[#D92732]'
                         : isCurrent
-                        ? 'bg-cyan-400'
-                        : 'bg-slate-800'
+                        ? 'bg-[#172B3A]'
+                        : 'bg-[#E5EAF0]'
                     }`}
                   />
                 );
@@ -110,10 +111,10 @@ export const QuizSection: React.FC = () => {
 
           {/* Question Text */}
           <div className="mb-6">
-            <span className="text-xs font-mono text-cyan-400 block mb-1">
+            <span className="text-xs font-code font-bold text-[#4A9FE8] block mb-1">
               #{currentQ.id}-сұрақ
             </span>
-            <h3 className="text-lg sm:text-xl font-bold text-white leading-snug">
+            <h3 className="text-lg sm:text-xl font-extrabold text-[#172B3A] leading-snug">
               {currentQ.question}
             </h3>
           </div>
@@ -126,14 +127,14 @@ export const QuizSection: React.FC = () => {
               const showFeedback = selectedOption !== null;
 
               let btnStyle =
-                'bg-slate-900/80 border-slate-800 text-slate-200 hover:border-cyan-500/50 hover:bg-slate-800/80';
+                'bg-[#F5F8FA] border-[#E5EAF0] text-[#172B3A] hover:border-[#4A9FE8] hover:bg-[#DCEEFF]/40';
               if (showFeedback) {
                 if (isCorrect) {
-                  btnStyle = 'bg-emerald-950/60 border-emerald-400 text-emerald-100 font-semibold';
+                  btnStyle = 'bg-[#DCEEFF] border-[#4A9FE8] text-[#172B3A] font-bold';
                 } else if (isSelected && !isCorrect) {
-                  btnStyle = 'bg-rose-950/60 border-rose-500 text-rose-200';
+                  btnStyle = 'bg-[#D92732]/10 border-[#D92732] text-[#D92732] font-semibold';
                 } else {
-                  btnStyle = 'bg-slate-900/40 border-slate-800/60 text-slate-500';
+                  btnStyle = 'bg-[#F5F8FA]/60 border-[#E5EAF0] text-[#657786]';
                 }
               }
 
@@ -146,17 +147,17 @@ export const QuizSection: React.FC = () => {
                   className={`w-full p-4 rounded-xl border text-left text-sm sm:text-base flex items-center justify-between gap-3 transition-all cursor-pointer disabled:cursor-default ${btnStyle}`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-lg bg-slate-950/80 border border-slate-700 flex items-center justify-center text-xs font-mono font-bold text-cyan-300 shrink-0">
+                    <span className="w-7 h-7 rounded-lg bg-[#FFFFFF] border border-[#E5EAF0] flex items-center justify-center text-xs font-code font-bold text-[#172B3A] shrink-0">
                       {String.fromCharCode(65 + idx)}
                     </span>
                     <span>{opt}</span>
                   </div>
 
                   {showFeedback && isCorrect && (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-[#4A9FE8] shrink-0" />
                   )}
                   {showFeedback && isSelected && !isCorrect && (
-                    <XCircle className="w-5 h-5 text-rose-400 shrink-0" />
+                    <XCircle className="w-5 h-5 text-[#D92732] shrink-0" />
                   )}
                 </button>
               );
@@ -165,18 +166,18 @@ export const QuizSection: React.FC = () => {
 
           {/* Explanation Box & Next Button */}
           {selectedOption !== null && (
-            <div className="p-4 rounded-xl bg-slate-950/90 border border-cyan-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-                <strong className="text-amber-300 block mb-0.5">
+            <div className="p-4 rounded-xl bg-[#F5F8FA] border border-[#E5EAF0] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="text-xs sm:text-sm text-[#172B3A] leading-relaxed">
+                <strong className={`block mb-0.5 ${selectedOption === currentQ.correctIndex ? 'text-[#4A9FE8]' : 'text-[#D92732]'}`}>
                   {selectedOption === currentQ.correctIndex ? '✓ Дұрыс жауап!' : '✗ Қателестіңіз. Дұрыс түсіндірмесі:'}
                 </strong>
-                {currentQ.explanation}
+                <span className="text-[#657786]">{currentQ.explanation}</span>
               </div>
 
               <button
                 type="button"
                 onClick={handleNext}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shrink-0 cursor-pointer hover:opacity-95"
+                className="px-5 py-2.5 rounded-xl bg-[#D92732] hover:bg-[#b81f29] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shrink-0 cursor-pointer transition-colors"
               >
                 <span>
                   {currentIndex + 1 < QUIZ_QUESTIONS.length ? 'Келесі сұрақ' : 'Нәтижені көру'}
@@ -188,21 +189,20 @@ export const QuizSection: React.FC = () => {
         </div>
       ) : (
         /* Final Results Screen */
-        <div className="rounded-2xl glass-panel-elevated p-8 border border-amber-400/50 text-center magic-glow-gold space-y-6">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-400 to-cyan-400 p-[2px] mx-auto">
-            <div className="w-full h-full bg-[#0b0f19] rounded-[14px] flex items-center justify-center">
-              <Award className="w-10 h-10 text-amber-300" />
-            </div>
+        <div className="rounded-2xl bg-[#FFFFFF] p-8 border border-[#E5EAF0] text-center shadow-lg space-y-6 relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-[#D92732]" />
+          <div className="w-20 h-20 rounded-2xl bg-[#DCEEFF] border border-[#4A9FE8]/40 mx-auto flex items-center justify-center">
+            <Award className="w-10 h-10 text-[#D92732]" />
           </div>
 
           <div>
-            <span className="text-xs uppercase tracking-widest text-cyan-300 font-bold">
+            <span className="text-xs uppercase tracking-widest text-[#657786] font-bold">
               Викторина аяқталды
             </span>
-            <h3 className="font-magic text-3xl sm:text-4xl font-extrabold text-white mt-1">
-              Сіздің бағаңыз: <span className="text-amber-300">{score} / 10</span> балл!
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-[#172B3A] mt-1">
+              Сіздің бағаңыз: <span className="text-[#D92732]">{score} / 10</span> балл!
             </h3>
-            <p className="text-base sm:text-lg font-semibold text-cyan-200 mt-2">
+            <p className="text-base sm:text-lg font-bold text-[#4A9FE8] mt-2">
               {getRankTitle(score)}
             </p>
           </div>
@@ -211,10 +211,10 @@ export const QuizSection: React.FC = () => {
             {answers.map((ok, i) => (
               <div
                 key={i}
-                className={`p-2 rounded-xl border font-mono text-xs font-bold ${
+                className={`p-2 rounded-xl border font-code text-xs font-bold ${
                   ok
-                    ? 'bg-emerald-500/20 border-emerald-400 text-emerald-300'
-                    : 'bg-rose-500/20 border-rose-500 text-rose-300'
+                    ? 'bg-[#DCEEFF] border-[#4A9FE8] text-[#172B3A]'
+                    : 'bg-[#D92732]/10 border-[#D92732] text-[#D92732]'
                 }`}
               >
                 #{i + 1} {ok ? '✓' : '✗'}
@@ -226,7 +226,7 @@ export const QuizSection: React.FC = () => {
             <button
               type="button"
               onClick={handleRestart}
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-300 via-cyan-300 to-cyan-400 text-slate-950 font-bold text-sm inline-flex items-center gap-2 cursor-pointer shadow-lg shadow-cyan-500/25"
+              className="px-6 py-3 rounded-xl bg-[#D92732] hover:bg-[#b81f29] text-white font-bold text-sm inline-flex items-center gap-2 cursor-pointer shadow-md"
             >
               <RotateCcw className="w-4 h-4" />
               <span>Тестті қайта тапсыру</span>

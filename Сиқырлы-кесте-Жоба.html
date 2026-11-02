@@ -108,10 +108,7 @@
               return '<div class="w-full text-center py-0.5 text-xs sm:text-sm font-bold tabular-nums ' +
                 (isMatch ? 'bg-[#D92732] text-white rounded font-extrabold' : 'text-[#172B3A]') + '">' + num + '</div>';
             }).join('') +
-          '</div>' +
-          '<div class="py-2.5 sm:py-3 text-center border-t border-[#CBD5E1] text-xs sm:text-sm font-semibold tabular-nums ' +
-            (isSel ? 'bg-[#DCEEFF] text-[#D92732] font-extrabold' : 'bg-[#F5F8FA] text-[#657786]') + '">' +
-            col.key +
+            '<div class="w-full text-center py-0.5 text-xs sm:text-sm font-bold tabular-nums text-[#172B3A]">' + col.key + '</div>' +
           '</div>' +
         '</div>';
       }).join('');

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Sparkles, Volume2, VolumeX, Wand2 } from 'lucide-react';
+import { Sparkles, Volume2, VolumeX, Wand2, HelpCircle, Table2, Bot, BookOpen, Trophy, GraduationCap } from 'lucide-react';
 import { soundManager } from '../utils/soundEffects';
 
-export type ActiveTab = 'game' | 'theory' | 'quiz' | 'passport';
+export type ActiveTab = 'table' | 'magician' | 'theory' | 'quiz' | 'passport';
 
 interface HeaderProps {
   activeTab: ActiveTab;
@@ -23,28 +23,36 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleTrainer,
   onOpenRules,
 }) => {
-  const navItems: { id: ActiveTab; label: string }[] = [
-    { id: 'game', label: 'Сиқырлы фокус' },
-    { id: 'theory', label: 'Теория мен зертхана' },
-    { id: 'quiz', label: 'Білім тесті (10/10)' },
-    { id: 'passport', label: 'Жоба паспорты' },
+  const navItems: { id: ActiveTab; label: string; icon: React.ReactNode }[] = [
+    { id: 'table', label: 'Сиқырлы кесте', icon: <Table2 className="w-4 h-4" /> },
+    { id: 'magician', label: 'Виртуалды Сиқыршы', icon: <Bot className="w-4 h-4" /> },
+    { id: 'theory', label: 'Теория мен зертхана', icon: <BookOpen className="w-4 h-4" /> },
+    { id: 'quiz', label: 'Білім тесті (10/10)', icon: <Trophy className="w-4 h-4" /> },
+    { id: 'passport', label: 'Жоба паспорты', icon: <GraduationCap className="w-4 h-4" /> },
   ];
 
   return (
-    <header className="w-full border-b border-purple-900/40 bg-[#0b0f19]/85 backdrop-blur-md sticky top-0 z-30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-8">
-        {/* Zone 1: Single-line Brand Title */}
+    <header className="w-full bg-[#FFFFFF]/95 backdrop-blur-md border-b border-[#E5EAF0] sticky top-0 z-30 shadow-[0_2px_12px_rgba(23,43,58,0.03)]">
+      {/* Signature thin red top accent line */}
+      <div className="w-full h-[2px] bg-[#D92732]" />
+
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4">
+        {/* Zone 1: Brand Title */}
         <button
           type="button"
-          onClick={() => onChangeTab('game')}
-          className="font-magic text-lg sm:text-xl font-bold tracking-wider bg-gradient-to-r from-cyan-300 via-purple-300 to-amber-200 bg-clip-text text-transparent whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-2"
+          onClick={() => onChangeTab('table')}
+          className="text-base sm:text-xl font-extrabold tracking-tight text-[#172B3A] whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-2 group"
         >
-          <Sparkles className="w-5 h-5 text-cyan-400 shrink-0" />
-          <span>СИҚЫРЛЫ КЕСТЕ</span>
+          <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#DCEEFF] border border-[#4A9FE8]/30 flex items-center justify-center text-[#D92732] group-hover:bg-[#D92732] group-hover:text-white transition-colors">
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          </span>
+          <span>
+            Сиқырлы <span className="text-[#D92732]">кесте</span>
+          </span>
         </button>
 
-        {/* Zone 2: 5 Single-Line Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+        {/* Zone 2: Desktop Navigation Menu */}
+        <nav className="hidden lg:flex items-center gap-1 bg-[#F5F8FA] p-1 rounded-xl border border-[#E5EAF0]">
           {navItems.map((item) => {
             const isActive = activeTab === item.id;
             return (
@@ -55,38 +63,45 @@ export const Header: React.FC<HeaderProps> = ({
                   onChangeTab(item.id);
                   soundManager.playSelect(520);
                 }}
-                className={`transition-colors cursor-pointer whitespace-nowrap shrink-0 pb-1 border-b-2 ${
+                className={`px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center gap-1.5 relative ${
                   isActive
-                    ? 'text-cyan-300 border-cyan-400 font-semibold'
-                    : 'text-slate-300 border-transparent hover:text-white hover:border-purple-500/50'
+                    ? 'bg-[#FFFFFF] text-[#172B3A] shadow-xs border border-[#E5EAF0]'
+                    : 'text-[#657786] hover:text-[#172B3A] hover:bg-[#FFFFFF]/60'
                 }`}
               >
-                {item.label}
+                <span className={isActive ? 'text-[#D92732]' : 'text-[#4A9FE8]'}>{item.icon}</span>
+                <span>{item.label}</span>
+                {isActive && (
+                  <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#D92732] rounded-full" />
+                )}
               </button>
             );
           })}
-          <button
-            type="button"
-            onClick={onOpenRules}
-            className="text-slate-300 hover:text-white transition-colors cursor-pointer whitespace-nowrap shrink-0 pb-1 border-b-2 border-transparent"
-          >
-            Ережесі
-          </button>
         </nav>
 
-        {/* Zone 3: Primary Action & Audio */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        {/* Zone 3: Quick Actions (Trainer, Rules, Sound) */}
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <button
             type="button"
             onClick={onToggleTrainer}
-            className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center gap-1.5 ${
+            className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold rounded-xl border transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center gap-1.5 ${
               showTrainer
-                ? 'bg-amber-500/20 border-amber-400 text-amber-200'
-                : 'bg-purple-950/50 border-purple-700/50 text-cyan-200 hover:bg-purple-900/50 hover:text-white'
+                ? 'bg-[#D92732] border-[#D92732] text-white'
+                : 'bg-[#DCEEFF] border-[#4A9FE8]/40 text-[#172B3A] hover:bg-[#4A9FE8] hover:text-white'
             }`}
           >
-            <Wand2 className="w-3.5 h-3.5 text-cyan-400" />
+            <Wand2 className="w-3.5 h-3.5" />
             <span>Тренажер</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={onOpenRules}
+            className="p-1.5 sm:p-2 rounded-xl bg-[#F5F8FA] border border-[#E5EAF0] text-[#657786] hover:text-[#172B3A] hover:border-[#4A9FE8] transition-colors cursor-pointer"
+            title="Ойын ережесі"
+            aria-label="Ойын ережесі"
+          >
+            <HelpCircle className="w-4 h-4" />
           </button>
 
           <button
@@ -96,20 +111,20 @@ export const Header: React.FC<HeaderProps> = ({
               soundManager.playSelect(550);
             }}
             aria-label={isMuted ? 'Дыбысты қосу' : 'Дыбысты өшіру'}
-            className="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-cyan-300 hover:border-cyan-500/50 transition-colors cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-xl bg-[#F5F8FA] border border-[#E5EAF0] text-[#657786] hover:text-[#172B3A] hover:border-[#4A9FE8] transition-colors cursor-pointer"
             title={isMuted ? 'Дыбысты қосу' : 'Дыбысты өшіру'}
           >
             {isMuted ? (
-              <VolumeX className="w-4 h-4 text-slate-500" />
+              <VolumeX className="w-4 h-4 text-[#D92732]" />
             ) : (
-              <Volume2 className="w-4 h-4 text-cyan-400" />
+              <Volume2 className="w-4 h-4 text-[#4A9FE8]" />
             )}
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Strip */}
-      <div className="md:hidden flex items-center gap-2 overflow-x-auto px-4 py-2 border-t border-slate-800/80 bg-[#090d16]">
+      {/* Mobile & Tablet Navigation Bar */}
+      <div className="lg:hidden flex items-center gap-1.5 overflow-x-auto px-3 sm:px-4 py-2 border-t border-[#E5EAF0] bg-[#F5F8FA] no-scrollbar">
         {navItems.map((item) => {
           const isActive = activeTab === item.id;
           return (
@@ -120,13 +135,14 @@ export const Header: React.FC<HeaderProps> = ({
                 onChangeTab(item.id);
                 soundManager.playSelect(520);
               }}
-              className={`px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap shrink-0 cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-1.5 ${
                 isActive
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#FFFFFF] text-[#172B3A] border border-[#4A9FE8] shadow-xs'
+                  : 'text-[#657786] hover:text-[#172B3A]'
               }`}
             >
-              {item.label}
+              <span className={isActive ? 'text-[#D92732]' : 'text-[#4A9FE8]'}>{item.icon}</span>
+              <span>{item.label}</span>
             </button>
           );
         })}
